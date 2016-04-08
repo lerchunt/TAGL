@@ -4,7 +4,7 @@
   <groupId>fr.uga.erods</groupId>
   <artifactId>projet</artifactId>
   <packaging>jar</packaging>
-  <version>1</version>
+  <version>4.0</version>
   <name>projet</name>
   <url>http://maven.apache.org</url>
   <dependencies>
