@@ -1,8 +1,0 @@
-<groupId>TAGL</groupId>
-<artifactId>parent</artifactId>
-<version>0.0.1-SNAPSHOT</version>
-<packaging>pom</packaging>
-
-<modules>
-    <module>projet</module>
-</modules>
