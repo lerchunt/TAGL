@@ -9,8 +9,8 @@ public class Client<T> implements ClientItf<T>{
 	}
 
 	public void disconnect() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stubs
+			
 	}
 
 	public void laddKey() {
