@@ -7,7 +7,7 @@ public interface ClientItf <T>{
 	public void laddKey();
 	public void raddKey();
 	public void rmKey();
-	public <T> getKey();
+	public T getKey();
 	public void setKey();
 
 }

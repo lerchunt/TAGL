@@ -1,6 +1,6 @@
 package fr.uga.erods;
 
-public class Client implements ClientItf{
+public class Client<T> implements ClientItf<T>{
 	private String id;
 
 	public void connect(Serveur s) {
@@ -9,6 +9,32 @@ public class Client implements ClientItf{
 	}
 
 	public void disconnect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void laddKey() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void raddKey() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void rmKey() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public T getKey() {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setKey() {
 		// TODO Auto-generated method stub
 		
 	}
