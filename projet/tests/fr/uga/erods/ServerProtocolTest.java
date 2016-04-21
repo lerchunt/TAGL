@@ -150,22 +150,46 @@ public class ServerProtocolTest extends TestCase {
 		theInput = "RPUSH friends Julie";
 		sp.processInput(theInput,2); 
 		theInput = "LPOP friends";
+		String m = sp.processInput(theInput,2);	
+		assertEquals("LPOP :", "Thomas",m);
+	}
+	
+	public void testRPOP() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2); 
+		theInput = "RPOP friends";
 		String m = sp.processInput(theInput,2);
 		
-		assertEquals("LPOP :", "Thomas",m);
+		assertEquals("LPOP :", "Julie",m);
 
 	}
-
-	public void testRPOP() {
-		fail("Not yet implemented");
-	}
+	
 
 	public void testLLEN() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "LLEN friends";
+		String m=sp.processInput(theInput,2);
+		
+		assertEquals("LLEN :", "(integer) 2",m);
 	}
 
 	public void testLSET() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "LSET friends 1 Lorrie";
+		sp.processInput(theInput,2);
+		
+		assertEquals("LSET :", "Lorrie",sp.table.get("friends").get(1));
 	}
 
 	public void testSREM() {

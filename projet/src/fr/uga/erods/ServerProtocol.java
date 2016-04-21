@@ -84,6 +84,25 @@ public class ServerProtocol implements ClientItf<String> {
         		String[] input = theInput.split(" ");
         		String clé = input[1];
         		theOutput = LPOP(clé);
+        	}else if(theInput.contains("RPOP ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		theOutput = RPOP(clé);
+        	}else if(theInput.contains("LLEN ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		theOutput = LLEN(clé);
+        	}else if(theInput.contains("LSET ")){
+        		String[] input = theInput.split(" ");
+        		if(input.length != 4){
+        			System.err.println("ERREUR LSET : nombre d'arguments inccorect");
+        			return null;
+        		}
+        		String clé = input[1];
+        		int  index = Integer.parseInt(input[2]);
+        		String valeur = input[3];
+        		
+        		theOutput = LSET(clé,index,valeur);
         	}
         	
         	
