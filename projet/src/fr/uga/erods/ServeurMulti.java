@@ -37,7 +37,7 @@ public class ServeurMulti {
     public static void main(String[] args) throws IOException {
  
     if (args.length != 1) {
-        System.err.println("Usage: java ServeurMulti <port number>");
+        System.err.println("Usage: java KKMultiServer <port number>");
         System.exit(1);
     }
  
@@ -46,7 +46,7 @@ public class ServeurMulti {
          
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
             while (listening) {
-                new Serveur(serverSocket.accept()).start();
+                new ServeurThread(serverSocket.accept()).start();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + portNumber);

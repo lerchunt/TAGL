@@ -1,29 +1,27 @@
 package fr.uga.erods;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public interface ClientItf <T>{
-	/*
-	public void connect(Serveur s);
+	
+	public void connect(ServeurThread s);
 	public void disconnect();
-	*/
 	
-	public String LPUSH(String key, LinkedList<T> value); //value est une liste : ajout de value par la gauche et renvoie nombre final d'éléments
-	public String RPUSH(String  key, LinkedList<T> value); //value est une liste : ajout de value par la droite
-	public String LPUSHX(String key, LinkedList<T> value); //LPUSH que si la liste existe
-	public String RPUSHX(String key, LinkedList<T> value); //RPUSH que si la liste existe
 	
-	public String LINSERT(String key, String mode, T value, T insert); //mode = BEFORE ou AFTER. insert la valeur "insert" avant ou après la valeur "value"
+	public String LPUSH(String key, T value[]); //value est une liste : ajout de value par la gauche et renvoie nombre final d'éléments
+	public String RPUSH(String  key, T value[]); //value est une liste : ajout de value par la droite
+	public String LPUSHX(String key, T value[]); //LPUSH que si la liste existe
+	public String RPUSHX(String key, T value[]); //RPUSH que si la liste existe
+	
+	public ArrayList<String> LINSERT(String key, String mode, T value, T insert); //mode = BEFORE ou AFTER. insert la valeur "insert" avant ou après la valeur "value"
 	public String LPOP(String key); //supprime et retourne le 1er élément de la liste de key
-	public String RPOP(String key); //supprime et retourne le dernier élément de la liste de key
 	public String LLEN(String key); //renvoie le nombre d'élement de la liste
-	public String LSET(String key, int index, T value); //met à l'index la value
+	public ArrayList<String> LSET(String key, int index, T value); //met à l'index la value
 	
 	
 	
 	
-	public String SREM (String key, LinkedList<T> value); // supprime la ou les valeurs et renvoie le nombre de membre supprimer
+	public String SREM (String key, T[] value); // supprime la ou les valeurs et renvoie le nombre de membre supprimer
 	public String DEL(String[] key); //supprime une liste de clé et revoie le nombre d'élément supprimer et "OK" si que 1 élément
 	public String FLUSHALL(); //supprime toutes les clés
 	public String EXISTS (String[] key); //renvoie 1 si trouvé 0 sinon	
@@ -51,6 +49,5 @@ public interface ClientItf <T>{
 	public String HSTRLEN(String key, String field); //renvoie la longueur de la valeur du field
 	public ArrayList<String> HVALS(String key); //renvoie toutes les valeurs de tous les fields dans l'ordre d'insertion des fields et des valeurs
 	public String HINCRBY(String key, String field, int valIncr); //incrémente la valeur du field et renvoie la nouvelle valeur
-	
 		
 }

@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Serveur extends Thread{
+public class ServeurThread extends Thread{
 	private Socket socket = null;
 	 
-    public Serveur(Socket socket) {
+    public ServeurThread(Socket socket) {
         super("Serveur");
         this.socket = socket;
     }
@@ -24,11 +24,11 @@ public class Serveur extends Thread{
         ) {
             String inputLine, outputLine;
             ServerProtocol kkp = new ServerProtocol();
-            outputLine = kkp.processInput(null,1);
+            outputLine = kkp.processInput(null);
             out.println(outputLine);
  
             while ((inputLine = in.readLine()) != null) {
-                outputLine = kkp.processInput(inputLine,1);
+                outputLine = kkp.processInput(inputLine);
                 out.println(outputLine);
                 if (outputLine.equals("Bye"))
                     break;
