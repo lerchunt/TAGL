@@ -52,7 +52,39 @@ public class ServerProtocol implements ClientItf<String> {
         			valeur.add(input[i]);
         		}
         		theOutput = RPUSH(clé,valeur);
-        	}
+        	} else if(theInput.contains("LPUSHX ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		LinkedList<String> valeur = new LinkedList<String>();
+        		for (int i=2;i<input.length;i++){
+        			valeur.add(input[i]);
+        		}
+        		theOutput = LPUSHX(clé,valeur);
+        	}else if(theInput.contains("RPUSHX ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		LinkedList<String> valeur = new LinkedList<String>();
+        		for (int i=2;i<input.length;i++){
+        			valeur.add(input[i]);
+        		}
+        		theOutput = RPUSHX(clé,valeur);
+        	}else if(theInput.contains("LINSERT ")){
+        		String[] input = theInput.split(" ");
+        		if(input.length != 5){
+        			System.err.println("ERREUR LINSERT : nombre d'arguments inccorect");
+        			return null;
+        		}
+        		String clé = input[1];
+        		String mode = input[2];
+        		String valeur = input[3];
+        		String insert = input[4];
+        		
+        		theOutput = LINSERT(clé,mode,valeur,insert);
+        	}else if(theInput.contains("LPOP ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		theOutput = LPOP(clé);
+        		
         	
         	
         	
@@ -137,7 +169,7 @@ public class ServerProtocol implements ClientItf<String> {
 	@Override
 	public String LINSERT(String key, String mode, String value, String insert) {
 		if(table.containsKey(key)){
-			if(table.contains(value)){
+			if(table.get(key).contains(value)){
 				LinkedList<String> tmp = table.get(key);
 				int index = tmp.indexOf(value);
 				if(mode.toUpperCase().equals("BEFORE")){
