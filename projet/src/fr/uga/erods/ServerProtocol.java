@@ -84,7 +84,7 @@ public class ServerProtocol implements ClientItf<String> {
         		String[] input = theInput.split(" ");
         		String clé = input[1];
         		theOutput = LPOP(clé);
-        		
+        	}
         	
         	
         	
