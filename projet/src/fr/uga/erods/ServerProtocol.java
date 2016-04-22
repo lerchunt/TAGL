@@ -95,7 +95,7 @@ public class ServerProtocol implements ClientItf<String> {
         	}else if(theInput.contains("LSET ")){
         		String[] input = theInput.split(" ");
         		if(input.length != 4){
-        			System.err.println("ERREUR LSET : nombre d'arguments inccorect");
+        			System.err.println("ERREUR LSET : nombre d'arguments incorrect");
         			return null;
         		}
         		String clé = input[1];
@@ -120,6 +120,18 @@ public class ServerProtocol implements ClientItf<String> {
         		theOutput = DEL(clés);
         	}else if(theInput.contains("FLUSHALL")){
         		theOutput = FLUSHALL();
+        	}
+        	else if(theInput.contains("EXISTS ")){
+        		String[] input = theInput.split(" ");
+        		if(input.length<1){
+        			System.err.println("ERREUR EXISTS : nombre d'arguments incorrect");
+        			return null;
+        		}
+        		LinkedList<String> clés = new LinkedList<String>();
+        		for (int i=1;i<input.length;i++){
+        			clés.add(input[i]);
+        		}
+        		theOutput = EXISTS(clés);
         	}
         	
         	
@@ -308,15 +320,28 @@ public class ServerProtocol implements ClientItf<String> {
 	}
 
 	@Override
-	public String EXISTS(String[] key) {
-		// TODO Auto-generated method stub
-		return null;
+	public String EXISTS(LinkedList<String> key) {
+		int nb=0;
+		for(String s :key){
+			if table.containsKey(s){
+				nb++;
+			}
+		}
+		return "(integer) "+nb;
 	}
 
 	@Override
 	public String GET(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(table.containsKey(key)){
+			tmp = table.get(key);
+			if(tmp instanceof String){
+				return tmp;
+			}
+			else{
+				return "erreur de syntaxe";
+			}
+		}
+		else return "(nil)";
 	}
 
 	@Override
