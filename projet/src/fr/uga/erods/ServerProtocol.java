@@ -103,6 +103,23 @@ public class ServerProtocol implements ClientItf<String> {
         		String valeur = input[3];
         		
         		theOutput = LSET(clé,index,valeur);
+        	}else if(theInput.contains("SREM ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		LinkedList<String> valeur = new LinkedList<String>();
+        		for (int i=2;i<input.length;i++){
+        			valeur.add(input[i]);
+        		}
+        		theOutput = SREM(clé,valeur);
+        	}else if(theInput.contains("DEL ")){
+        		String[] input = theInput.split(" ");
+        		LinkedList<String> clés = new LinkedList<String>();
+        		for (int i=1;i<input.length;i++){
+        			clés.add(input[i]);
+        		}
+        		theOutput = DEL(clés);
+        	}else if(theInput.contains("FLUSHALL")){
+        		theOutput = FLUSHALL();
         	}
         	
         	
@@ -259,20 +276,35 @@ public class ServerProtocol implements ClientItf<String> {
 
 	@Override
 	public String SREM(String key, LinkedList<String> value) {
-		
-		return null;
+		if(table.containsKey(key)){
+			LinkedList<String> tmp = table.get(key);
+			int nb=tmp.size();
+			tmp.removeAll(value);
+			nb = nb-tmp.size();
+			table.put(key, tmp);
+			return "(integer) "+nb;
+		}else{
+			System.err.println("ERREUR : pas de clé à ce nom");
+			return null;
+		}
 	}
 
 	@Override
-	public String DEL(String[] key) {
-		// TODO Auto-generated method stub
-		return null;
+	public String DEL(LinkedList <String> keys) {
+		int cpt = 0;
+		for(String k : keys){
+			if(table.containsKey(k){
+				table.remove(k);
+				cpt++;
+			}
+		}
+		return "(integer) "+cpt;
 	}
 
 	@Override
 	public String FLUSHALL() {
-		// TODO Auto-generated method stub
-		return null;
+		table.clear();
+		return "OK";
 	}
 
 	@Override
