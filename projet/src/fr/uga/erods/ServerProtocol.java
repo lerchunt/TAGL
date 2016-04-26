@@ -95,7 +95,7 @@ public class ServerProtocol implements ClientItf<String> {
         	}else if(theInput.contains("LSET ")){
         		String[] input = theInput.split(" ");
         		if(input.length != 4){
-        			System.err.println("ERREUR LSET : nombre d'arguments inccorect");
+        			System.err.println("ERREUR LSET : nombre d'arguments incorrect");
         			return null;
         		}
         		String clé = input[1];
@@ -103,6 +103,35 @@ public class ServerProtocol implements ClientItf<String> {
         		String valeur = input[3];
         		
         		theOutput = LSET(clé,index,valeur);
+        	}else if(theInput.contains("SREM ")){
+        		String[] input = theInput.split(" ");
+        		String clé = input[1];
+        		LinkedList<String> valeur = new LinkedList<String>();
+        		for (int i=2;i<input.length;i++){
+        			valeur.add(input[i]);
+        		}
+        		theOutput = SREM(clé,valeur);
+        	}else if(theInput.contains("DEL ")){
+        		String[] input = theInput.split(" ");
+        		LinkedList<String> clés = new LinkedList<String>();
+        		for (int i=1;i<input.length;i++){
+        			clés.add(input[i]);
+        		}
+        		theOutput = DEL(clés);
+        	}else if(theInput.contains("FLUSHALL")){
+        		theOutput = FLUSHALL();
+        	}
+        	else if(theInput.contains("EXISTS ")){
+        		String[] input = theInput.split(" ");
+        		if(input.length<1){
+        			System.err.println("ERREUR EXISTS : nombre d'arguments incorrect");
+        			return null;
+        		}
+        		LinkedList<String> clés = new LinkedList<String>();
+        		for (int i=1;i<input.length;i++){
+        			clés.add(input[i]);
+        		}
+        		theOutput = EXISTS(clés);
         	}
         	
         	
@@ -258,15 +287,15 @@ public class ServerProtocol implements ClientItf<String> {
 	}
 
 	@Override
-	public String LREM(String key, int number,String value) {
+
+	public String SREM(String key, LinkedList<String> value) {
 		if(table.containsKey(key)){
-			//table.get(key).
-			//LinkedList<String> tmp = table.get(key);
-			
-			//table.get(key).remove(value);
-			//table.put(key, tmp);
-			//return value.size();
-			return null;
+			LinkedList<String> tmp = table.get(key);
+			int nb=tmp.size();
+			tmp.removeAll(value);
+			nb = nb-tmp.size();
+			table.put(key, tmp);
+			return "(integer) "+nb;
 		}else{
 			System.err.println("ERREUR : pas de clé à ce nom");
 			return null;
@@ -274,26 +303,50 @@ public class ServerProtocol implements ClientItf<String> {
 	}
 
 	@Override
-	public String DEL(String[] key) {
-		// TODO Auto-generated method stub
-		return null;
+	public String DEL(LinkedList <String> keys) {
+		int cpt = 0;
+		for(String k : keys){
+			if(table.containsKey(k)){
+				table.remove(k);
+				cpt++;
+			}
+		}
+		return "(integer) "+cpt;
 	}
 
 	@Override
 	public String FLUSHALL() {
-		// TODO Auto-generated method stub
-		return null;
+		table.clear();
+		return "OK";
 	}
 
 	@Override
-	public String EXISTS(String[] key) {
-		// TODO Auto-generated method stub
-		return null;
+	public String EXISTS(LinkedList<String> key) {
+		int nb=0;
+		for(String s :key){
+			if (table.containsKey(s)){
+				nb++;
+			}
+		}
+		return "(integer) "+nb;
 	}
 
 	@Override
 	public String GET(String key) {
-		// TODO Auto-generated method stub
+		if(table.containsKey(key)){
+			LinkedList<String> tmp = table.get(key);
+			for (String l : tmp){
+				if(l instanceof String){
+					return l;
+				}
+				else{
+					return "erreur de syntaxe";
+				}
+			}
+			
+		}
+		else 
+			return "(nil)";
 		return null;
 	}
 

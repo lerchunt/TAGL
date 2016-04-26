@@ -19,12 +19,12 @@ public interface ClientItf <T>{
 	public String RPOP(String key); //supprime et retourne le dernier élément de la liste de key
 	public String LLEN(String key); //renvoie le nombre d'élement de la liste
 	public String LSET(String key, int index, T value); //met à l'index la value
-	public String LREM (String key, int number, T value); // supprime la ou les valeurs et renvoie le nombre de membre supprimer
+	public String SREM(String key, LinkedList<String> value); // supprime la ou les valeurs et renvoie le nombre de membre supprimer
 	
 	
-	public String DEL(String[] key); //supprime une liste de clé et revoie le nombre d'élément supprimer et "OK" si que 1 élément
+	public String DEL(LinkedList <String> key); //supprime une liste de clé et revoie le nombre d'élément supprimer et "OK" si que 1 élément
 	public String FLUSHALL(); //supprime toutes les clés
-	public String EXISTS (String[] key); //renvoie 1 si trouvé 0 sinon	
+	public String EXISTS (LinkedList<String> key); //renvoie 1 si trouvé 0 sinon	
 	
 	public T GET(String key); //donne la valeur de la clé
 	public String GETRANGE(String Key, int start, int end); //renvoie value[start:end] que si value est un String
@@ -49,6 +49,7 @@ public interface ClientItf <T>{
 	public String HSTRLEN(String key, String field); //renvoie la longueur de la valeur du field
 	public ArrayList<String> HVALS(String key); //renvoie toutes les valeurs de tous les fields dans l'ordre d'insertion des fields et des valeurs
 	public String HINCRBY(String key, String field, int valIncr); //incrémente la valeur du field et renvoie la nouvelle valeur
+	
 	
 		
 }
