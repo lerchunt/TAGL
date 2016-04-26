@@ -19,11 +19,9 @@ public interface ClientItf <T>{
 	public String RPOP(String key); //supprime et retourne le dernier élément de la liste de key
 	public String LLEN(String key); //renvoie le nombre d'élement de la liste
 	public String LSET(String key, int index, T value); //met à l'index la value
+	public String LREM (String key, int number, T value); // supprime la ou les valeurs et renvoie le nombre de membre supprimer
 	
 	
-	
-	
-	public String SREM (String key, LinkedList<T> value); // supprime la ou les valeurs et renvoie le nombre de membre supprimer
 	public String DEL(String[] key); //supprime une liste de clé et revoie le nombre d'élément supprimer et "OK" si que 1 élément
 	public String FLUSHALL(); //supprime toutes les clés
 	public String EXISTS (String[] key); //renvoie 1 si trouvé 0 sinon	

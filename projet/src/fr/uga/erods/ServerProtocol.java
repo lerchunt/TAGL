@@ -258,9 +258,19 @@ public class ServerProtocol implements ClientItf<String> {
 	}
 
 	@Override
-	public String SREM(String key, LinkedList<String> value) {
-		
-		return null;
+	public String LREM(String key, int number,String value) {
+		if(table.containsKey(key)){
+			//table.get(key).
+			//LinkedList<String> tmp = table.get(key);
+			
+			//table.get(key).remove(value);
+			//table.put(key, tmp);
+			//return value.size();
+			return null;
+		}else{
+			System.err.println("ERREUR : pas de clé à ce nom");
+			return null;
+		}
 	}
 
 	@Override
