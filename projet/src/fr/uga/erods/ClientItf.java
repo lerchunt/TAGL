@@ -30,7 +30,7 @@ public interface ClientItf <T>{
 	public String LRANGE(String key, int start, int end); //renvoie les valeurs de start à end de Key
 	
 	public T GETSET(String key, LinkedList<T> value); //remplace la valeur et retourne l'ancienne
-	public String SET(String key, LinkedList<T> value); //modifie la valeur d'une clé et la créer si existe pas renvoie OK si ok
+	public String SET(String key, T value); //modifie la valeur d'une clé et la créer si existe pas renvoie OK si ok
 	
 	public String APPEND(String key, T value); //ajoute la valeur à la clé (concaténation) et renvoie la longueur finale
 	public String DECR(String key); //décrémente la valeur et renvoie la nouvelle valeur, si pas en int --> error !

@@ -168,16 +168,44 @@ public class ServerProtocol implements ClientItf<String> {
 				String[] input = theInput.split(" ");
 				if(input.length >= 3){
 					String key = input[1];
-					LinkedList<String> valeur = new LinkedList<String>();
+					String valeur="";
+					
 					for (int i=2;i<input.length;i++){
-						valeur.add(input[i]);
+						valeur=valeur.concat(input[i]);
 					}					
 					theOutput = SET(key,valeur);
 				}else{
 					System.err.println("ERREUR SET : nombre d'arguments incorrect");
 					return null;
 				}
-			}else if(theInput.toUpperCase().contains("ECHO ")){
+			}else if(theInput.toUpperCase().contains("APPEND ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 3){
+					theOutput = APPEND(input[1],input[2]);
+				} else{
+					System.err.println("ERREUR APPEND : nombre d'arguments incorrect");
+					return null;
+				}				
+			}
+			else if(theInput.toUpperCase().contains("DECR ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 2){
+					theOutput = DECR(input[1]);
+				} else{
+					System.err.println("ERREUR DECR : nombre d'arguments incorrect");
+					return null;
+				}				
+			}
+			else if(theInput.toUpperCase().contains("INCR ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 2){
+					theOutput = INCR(input[1]);
+				} else{
+					System.err.println("ERREUR INCR : nombre d'arguments incorrect");
+					return null;
+				}				
+			}
+			else if(theInput.toUpperCase().contains("ECHO ")){
 					theOutput = ECHO(theInput);
 			}else if(theInput.toUpperCase().contains("COMMAND ")){
 				theOutput = COMMAND();
@@ -433,14 +461,18 @@ public class ServerProtocol implements ClientItf<String> {
 	}
 
 	@Override
-	public String SET(String key, LinkedList<String> value) {
+	public String SET(String key, String value) {
 		if(table.containsKey(key)){
 			String res = GET(key);
-			table.put(key, value);
+			LinkedList<String> tmp;
+			tmp.add(res);
+			table.put(key, tmp);
 			return res;
 		}
 		else {
-			table.put(key, value);
+			LinkedList<String> tmp;
+			tmp.add(value);
+			table.put(key, tmp);
 			return "Ok";
 		}
 	}
@@ -448,19 +480,61 @@ public class ServerProtocol implements ClientItf<String> {
 	@Override
 	public String APPEND(String key, String value) {
 		// TODO Auto-generated method stub
+		if(table.containsKey(key)){
+			String res=GET(key);
+			
+			String v=res.concat(value);
+			SET(key,v);
+			return "(integer) "+ v.length();
+		}
+		else
+		{
+			SET(key, value);
+			return "(integer) "+value.length();
+		}
 		return null;
 	}
 
 	@Override
 	public String DECR(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(table.containsKey(key)){
+			String res=GET(key);
+			if(estUnEntier(res)){
+				int i=Integer.parseInt(res);
+				i--;
+				SET(key, String.valueOf(i));
+				return "(integer) "+i;
+			}
+			else
+			{
+				System.err.println("(erreur) ERR value is not an integer or out of range");
+				return null;
+			}
+		}else{
+			SET(key,"-1");
+			return ("(integer) -1");
+		}
 	}
 
 	@Override
 	public String INCR(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(table.containsKey(key)){
+			String res=GET(key);
+			if(estUnEntier(res)){
+				int i=Integer.parseInt(res);
+				i++;
+				SET(key, String.valueOf(i));
+				return "(integer) "+i;
+			}
+			else
+			{
+				System.err.println("(erreur) ERR value is not an integer or out of range");
+				return null;
+			}
+		}else{
+			SET(key,"1");
+			return ("(integer) 1");
+		}
 	}
 
 	@Override
@@ -553,6 +627,17 @@ public class ServerProtocol implements ClientItf<String> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public boolean estUnEntier(String chaine) {
+		try {
+			Integer.parseInt(chaine);
+		} catch (NumberFormatException e){
+			return false;
+		}
+ 
+		return true;
+	}
+
 
 
 }
