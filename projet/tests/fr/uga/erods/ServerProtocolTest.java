@@ -21,7 +21,7 @@ public class ServerProtocolTest extends TestCase {
 		fail("Not yet implemented");
 	}
 
-*/
+	 */
 
 
 	public void testLPUSHCreation() {		
@@ -95,7 +95,7 @@ public class ServerProtocolTest extends TestCase {
 		sp.processInput(theInput,2); 
 		theInput = "RPUSHX friends Julie";
 		sp.processInput(theInput,2);
-		
+
 		String resultatObtenu = sp.table.get("friends").get(0) + " " + sp.table.get("friends").get(1);
 		assertEquals("insertion élément par RPUSHX, clé existe :", "Thomas Julie",resultatObtenu);
 	}
@@ -109,7 +109,7 @@ public class ServerProtocolTest extends TestCase {
 		String m = sp.processInput(theInput,2);
 		assertEquals("insertion avec LINSERT AFTER : ","2",m);
 	}
-	
+
 	public void testLINSERTBEFORE() {
 		//Insertion d'un élément avant une valeur existante dans une clé existante
 		ServerProtocol sp = new ServerProtocol();
@@ -117,11 +117,11 @@ public class ServerProtocolTest extends TestCase {
 		sp.processInput(theInput,2); 
 		theInput = "LINSERT friends BEFORE Thomas Julie";
 		String m = sp.processInput(theInput,2);
-		
+
 		String resultatObtenu = sp.table.get("friends").get(0) + " " + sp.table.get("friends").get(1);
 		assertEquals("insertion avec LINSERT BEFORE :", "Julie Thomas",resultatObtenu);
 	}
-	
+
 	public void testLINSERTValInex() {
 		//Insertion d'un élément avant une valeur inexistante dans une clé existante
 		ServerProtocol sp = new ServerProtocol();
@@ -129,19 +129,19 @@ public class ServerProtocolTest extends TestCase {
 		sp.processInput(theInput,2); 
 		theInput = "LINSERT friends BEFORE Lorrie Julie";
 		String m = sp.processInput(theInput,2);
-		
+
 		assertEquals("insertion avec LINSERT valeur inexistante :", "-1",m);
 	}
-	
+
 	public void testLINSERTCléInex() {
 		//Insertion d'uString theInput = "RPUSH friends Thomas";
 		ServerProtocol sp = new ServerProtocol();
 		String theInput = "LINSERT friends BEFORE Lorrie Julie";
 		String m = sp.processInput(theInput,2);
-		
+
 		assertEquals("insertion avec LINSERT clé inexistante :", "0",m);
 	}
-	
+
 
 	public void testLPOP() {
 		ServerProtocol sp = new ServerProtocol();
@@ -153,7 +153,7 @@ public class ServerProtocolTest extends TestCase {
 		String m = sp.processInput(theInput,2);	
 		assertEquals("LPOP :", "Thomas",m);
 	}
-	
+
 	public void testRPOP() {
 		ServerProtocol sp = new ServerProtocol();
 		String theInput = "RPUSH friends Thomas";
@@ -162,11 +162,11 @@ public class ServerProtocolTest extends TestCase {
 		sp.processInput(theInput,2); 
 		theInput = "RPOP friends";
 		String m = sp.processInput(theInput,2);
-		
+
 		assertEquals("LPOP :", "Julie",m);
 
 	}
-	
+
 
 	public void testLLEN() {
 		ServerProtocol sp = new ServerProtocol();
@@ -176,7 +176,7 @@ public class ServerProtocolTest extends TestCase {
 		sp.processInput(theInput,2);
 		theInput = "LLEN friends";
 		String m=sp.processInput(theInput,2);
-		
+
 		assertEquals("LLEN :", "(integer) 2",m);
 	}
 
@@ -188,40 +188,193 @@ public class ServerProtocolTest extends TestCase {
 		sp.processInput(theInput,2);
 		theInput = "LSET friends 1 Lorrie";
 		sp.processInput(theInput,2);
-		
+
 		assertEquals("LSET :", "Lorrie",sp.table.get("friends").get(1));
 	}
 
 	public void testSREM() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Lorrie";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Margaux";
+		sp.processInput(theInput,2);
+		theInput = "SREM friends Lorrie Julie";
+		sp.processInput(theInput,2);
+
+		String resultatObtenu = sp.table.get("friends").get(0)+ " " + sp.table.get("friends").get(1); 
+		assertEquals("SREM :", "Thomas Margaux",resultatObtenu);
+
 	}
 
-	public void testDEL() {
-		fail("Not yet implemented");
+	public void testDEL1elem() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "DEL friends";
+		sp.processInput(theInput,2);
+
+		assertFalse("DEL 1 element : ", sp.table.containsKey("friends"));
+	}
+
+	public void testDEL2elem() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH salade batavia";
+		sp.processInput(theInput,2);
+		theInput = "DEL friends salade";
+		String m = sp.processInput(theInput,2);
+
+		assertEquals("DEL :", "(integer) 2",m);
+
 	}
 
 	public void testFLUSHALL() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH salade batavia";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH banane plantin";
+		sp.processInput(theInput,2);
+		theInput = "FLUSHALL";
+		sp.processInput(theInput,2);
+
+		assertEquals("FLUSHALL : ", 0, sp.table.size());
 	}
 
-	public void testEXISTS() {
-		fail("Not yet implemented");
+	public void testEXISTSTrue() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH salade batavia";
+		sp.processInput(theInput,2);
+		theInput = "EXISTS salade";
+		sp.processInput(theInput,2);
+
+		assertTrue("EXISTS True : ", sp.table.containsKey("salade"));
+	}
+
+	public void testEXISTSFalse() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH salade batavia";
+		sp.processInput(theInput,2);
+		theInput = "EXISTS banane";
+		sp.processInput(theInput,2);
+
+		assertFalse("EXISTS False : ", sp.table.containsKey("banane"));
 	}
 
 	public void testGET() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "GET friends";
+		String m = sp.processInput(theInput,2);
+
+		String resAttendu = "1) Thomas\n2) Julie\n";
+		assertEquals("GET :", resAttendu, m);		
 	}
 
-	public void testGETRANGE() {
-		fail("Not yet implemented");
+	public void testLRANGETous() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Lorrie";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Margaux";
+		sp.processInput(theInput,2);
+		theInput = "LRANGE friends 0 -1";
+		String m = sp.processInput(theInput,2);
+		
+		String resAttendu = "1) Thomas\n2) Julie\n3) Lorrie\n4) Margaux\n";
+		assertEquals("GET tous les éléments :", resAttendu, m);	
 	}
+	
+	public void testLRANGE() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Lorrie";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Margaux";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Apo";
+		sp.processInput(theInput,2);
+		
+		theInput = "LRANGE friends 1 3";
+		String m = sp.processInput(theInput,2);
+		
+		String resAttendu = "1) Julie\n2) Lorrie\n3) Margaux\n";
+		assertEquals("GET :", resAttendu, m);	
+		
+	}
+	
 
+	public void testGETSETIncorrect() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "GETSET salade batavia";
+		sp.processInput(theInput,2);
+		
+		assertFalse("GETSET clé inexistante : ",sp.table.containsKey("salade"));
+	}
+	
 	public void testGETSET() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "GETSET friends Lorrie Margaux";
+		sp.processInput(theInput,2);
+		
+		String resObtenu = sp.table.get("friends").get(0)+" "+sp.table.get("friends").get(1);
+		String resAttendu = "Lorrie Margaux";
+		
+		assertEquals("GETSET clé existante : ",resAttendu,resObtenu);
 	}
 
+	public void testSETNewKey() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "SET salade batavia";
+		sp.processInput(theInput,2);
+		
+		assertTrue("SET clé inexistante : ",sp.table.containsKey("salade"));
+	}
+	
 	public void testSET() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "RPUSH friends Thomas";
+		sp.processInput(theInput,2);
+		theInput = "RPUSH friends Julie";
+		sp.processInput(theInput,2);
+		theInput = "SET friends Lorrie";
+		sp.processInput(theInput,2);
+		
+		boolean res = (sp.table.get("friends").contains("Lorrie") && sp.table.get("friends").size()==1);
+		assertTrue("SET clé existante : ",res);
 	}
 
 	public void testAPPEND() {

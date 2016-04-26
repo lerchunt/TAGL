@@ -24,13 +24,13 @@ public interface ClientItf <T>{
 	
 	public String DEL(LinkedList <String> key); //supprime une liste de clé et revoie le nombre d'élément supprimer et "OK" si que 1 élément
 	public String FLUSHALL(); //supprime toutes les clés
-	public String EXISTS (LinkedList<String> key); //renvoie 1 si trouvé 0 sinon	
+	public String EXISTS (String key); //renvoie 1 si trouvé 0 sinon	
 	
-	public T GET(String key); //donne la valeur de la clé
-	public String GETRANGE(String Key, int start, int end); //renvoie value[start:end] que si value est un String
+	public T GET(String key); //donne la/les valeurs de la clé
+	public String LRANGE(String key, int start, int end); //renvoie les valeurs de start à end de Key
 	
-	public T GETSET(String Key, T value); //remplace la valeur et retourne l'ancienne
-	public String SET(String Key, T value); //modifie la valeur d'une clé et la créer si existe pas renvoie OK si ok
+	public T GETSET(String key, LinkedList<T> value); //remplace la valeur et retourne l'ancienne
+	public String SET(String key, LinkedList<T> value); //modifie la valeur d'une clé et la créer si existe pas renvoie OK si ok
 	
 	public String APPEND(String key, T value); //ajoute la valeur à la clé (concaténation) et renvoie la longueur finale
 	public String DECR(String key); //décrémente la valeur et renvoie la nouvelle valeur, si pas en int --> error !
