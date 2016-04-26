@@ -10,7 +10,7 @@ public class ServerProtocol implements ClientItf<String> {
 	private static final int MANIPULATION = 2;
 	private static final int COMMANDES = 1;
 
-	//private int state = MENU;
+	private int state = MENU;
 
 	public Hashtable<String, LinkedList<String>> table = new Hashtable<String, LinkedList<String>>();
 
@@ -177,7 +177,11 @@ public class ServerProtocol implements ClientItf<String> {
 					System.err.println("ERREUR SET : nombre d'arguments incorrect");
 					return null;
 				}
-			}
+			}else if(theInput.toUpperCase().contains("ECHO ")){
+					theOutput = ECHO(theInput);
+			}else if(theInput.toUpperCase().contains("COMMAND ")){
+				theOutput = COMMAND();
+		}
 
 
 
@@ -185,7 +189,7 @@ public class ServerProtocol implements ClientItf<String> {
 
 
 		} else if (state == COMMANDES) {
-			// Liste commande
+			theOutput = COMMAND();
 			state = MENU;
 		}
 		return theOutput;
@@ -461,14 +465,39 @@ public class ServerProtocol implements ClientItf<String> {
 
 	@Override
 	public String ECHO(String message) {
-		// TODO Auto-generated method stub
-		return null;
+		return message.substring(5);
 	}
 
 	@Override
-	public ArrayList<ArrayList<String>> COMMAND() {
-		// TODO Auto-generated method stub
-		return null;
+	public String COMMAND() {
+		String Commandes ="Liste des commandes : \n";
+		Commandes += "LPUSH Key values : insertion des values par la droite dans Key\n";
+		Commandes += "LPUSHX Key values : insertion des values par la droite si Key existe\n";
+		Commandes += "RPUSH Key values : insertion des values par la gauche dans Key\n";
+		Commandes += "RPUSHX Key values : insertion des values par la gauche dans Key\n";
+		Commandes += "LINSERT Key mode value1 value2 : insertion de value2 en fonction du mode\n"
+				+ " dans Key\nmode=BEFORE ou AFTER\n";
+		Commandes += "LPOP Key : supprime et retourne le 1er élément de la liste dans Key\n";
+		Commandes += "RPOP Key : supprime et retourne le dernier élément de la liste dans Key\n";
+		Commandes += "LLEN Key : renvoie le nombre d'éléments de la liste dans Key\n";
+		Commandes += "LSET Key index value : insertion de value à l'index de la liste dans Key\n";
+		Commandes += "DEL Key : supprime Key et renvoie le nombre d'éléments supprimés\n";
+		Commandes += "FLUSHALL : supprime toutes les clés\n";
+		Commandes += "EXISTS Key : renvoie 1 si Key existe, 0 sinon\n";
+		Commandes += "GET Key : renvoie la ou les valeurs de Key\n";
+		Commandes += "LRANGE Key start end : renvoie les valeurs de Key compris entre start et end\n";
+		Commandes += "GETSET Key values : remplace les valeurs de Key par values et retourne les anciennes\n";
+		Commandes += "SET Key values : remplace les valeurs de Key par values et créer la clé si elle est inexistante\n";
+		
+		
+		Commandes += "ECHO String : affiche la String\n";
+		Commandes += "COMMAND : affiche les commandes\n";
+		
+		
+		
+		
+		
+		return Commandes;
 	}
 
 	@Override

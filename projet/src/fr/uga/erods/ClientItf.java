@@ -37,7 +37,7 @@ public interface ClientItf <T>{
 	public String INCR(String key); //incrémente la valeur et renvoie la nouvelle valeur, si pas en int --> error !
 	
 	public String ECHO(String message); //renvoie le message
-	public ArrayList<ArrayList<String>> COMMAND(); //retourne la liste des commandes disponibles
+	public String COMMAND(); //retourne la liste des commandes disponibles
 	
 	
 	public String HSET (String key, String field, T value); //Si clé existe pas: créer (renvoie 0), sinon met à jours (renvoie 1).

@@ -390,7 +390,11 @@ public class ServerProtocolTest extends TestCase {
 	}
 
 	public void testECHO() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "ECHO message enregistré !";
+		String m = sp.processInput(theInput,2);
+		
+		assertEquals("ECHO : ","message enregistré !",m);
 	}
 
 	public void testCOMMAND() {
