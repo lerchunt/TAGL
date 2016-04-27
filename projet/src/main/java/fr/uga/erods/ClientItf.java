@@ -1,13 +1,8 @@
-package fr.uga.erods;
+package main.java.fr.uga.erods;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public interface ClientItf <T>{
-	/*
-	public void connect(Serveur s);
-	public void disconnect();
-	*/
 	
 	public String LPUSH(String key, LinkedList<T> value); //value est une liste : ajout de value par la gauche et renvoie nombre final d'éléments
 	public String RPUSH(String  key, LinkedList<T> value); //value est une liste : ajout de value par la droite
@@ -27,7 +22,7 @@ public interface ClientItf <T>{
 	public String EXISTS (String key); //renvoie 1 si trouvé 0 sinon	
 	
 	public T GET(String key); //donne la/les valeurs de la clé
-	public String LRANGE(String key, int start, int end); //renvoie les valeurs de start à end de Key
+	public String LRANGE(String key, String start, String end); //renvoie les valeurs de start à end de Key
 	
 	public T GETSET(String key, LinkedList<T> value); //remplace la valeur et retourne l'ancienne
 	public String SET(String key, T value); //modifie la valeur d'une clé et la créer si existe pas renvoie OK si ok
@@ -47,9 +42,7 @@ public interface ClientItf <T>{
 	public String HKEYS(String key); //renvoie liste des fields de la clé
 	public String HLEN(String key); //renvoie le nombre de fields de la clé
 	public String HSTRLEN(String key, String field); //renvoie la longueur de la valeur du field
-	public LinkedList<String> HVALS(String key); //renvoie toutes les valeurs de tous les fields dans l'ordre d'insertion des fields et des valeurs
-	public String HINCRBY(String key, String field, int valIncr); //incrémente la valeur du field et renvoie la nouvelle valeur
-	
-	
+	public String HVALS(String key); //renvoie toutes les valeurs de tous les fields dans l'ordre d'insertion des fields et des valeurs
+	public String HINCRBY(String key, String field, String valIncr); //incrémente la valeur du field et renvoie la nouvelle valeur
 		
 }

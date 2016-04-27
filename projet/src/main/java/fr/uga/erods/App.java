@@ -1,4 +1,4 @@
-package fr.uga.erods;
+package main.java.fr.uga.erods;
 
 /**
  * Hello world!

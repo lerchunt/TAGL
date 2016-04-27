@@ -1,4 +1,4 @@
-package fr.uga.erods;
+package main.java.fr.uga.erods;
 /*
  * Copyright (c) 1995, 2013, Oracle and/or its affiliates. All rights reserved.
  *

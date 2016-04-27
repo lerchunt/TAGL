@@ -1,4 +1,4 @@
-package fr.uga.erods;
+package main.java.fr.uga.erods;
 
 import java.io.BufferedReader;
 import java.io.IOException;

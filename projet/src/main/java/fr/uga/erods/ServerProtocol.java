@@ -1,12 +1,8 @@
-package fr.uga.erods;
+package main.java.fr.uga.erods;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
 
 public class ServerProtocol implements ClientItf<String> {
 	private static final int MENU = 0;
@@ -149,8 +145,8 @@ public class ServerProtocol implements ClientItf<String> {
 				String[] input = theInput.split(" ");
 				if(input.length == 4){
 					String key = input[1];
-					int start = Integer.parseInt(input[2]);
-					int end = Integer.parseInt(input[3]);					
+					String start = input[2];
+					String end = input[3];					
 					theOutput = LRANGE(key,start,end);
 				}else{
 					System.err.println("ERREUR LRANGE : nombre d'arguments incorrect");
@@ -269,6 +265,49 @@ public class ServerProtocol implements ClientItf<String> {
 					System.err.println("ERREUR HKEYS : nombre d'arguments incorrect");
 					return null;
 				}	
+			} else if(theInput.toUpperCase().startsWith("HLEN ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 2){
+					String key = input[1];						
+					theOutput = HLEN(key);
+
+				} else{
+					System.err.println("ERREUR HLEN : nombre d'arguments incorrect");
+					return null;
+				}	
+			} else if(theInput.toUpperCase().startsWith("HSTRLEN ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 3){
+					String key = input[1];	
+					String field = input[2];
+					theOutput = HSTRLEN(key,field);
+
+				} else{
+					System.err.println("ERREUR HLEN : nombre d'arguments incorrect");
+					return null;
+				}	
+			} else if(theInput.toUpperCase().startsWith("HVALS ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 2){
+					String key = input[1];	
+					theOutput = HVALS(key);
+
+				} else{
+					System.err.println("ERREUR HLEN : nombre d'arguments incorrect");
+					return null;
+				}	
+			}else if(theInput.toUpperCase().startsWith("HINCRBY ")){
+				String[] input = theInput.split(" ");
+				if(input.length == 4){
+					String key = input[1];	
+					String field = input[2];
+					String incr = input[3];
+					theOutput = HINCRBY(key,field,incr);
+
+				} else{
+					System.err.println("ERREUR HLEN : nombre d'arguments incorrect");
+					return null;
+				}	
 			}
 
 
@@ -283,24 +322,6 @@ public class ServerProtocol implements ClientItf<String> {
 		return theOutput;
 	}
 
-	/*
-	@Override
-	public void connect(Serveur s) {		
-	}
-
-	@Override
-	public void disconnect() {
-	}
-
-
-	public Hashtable<String, LinkedList<String>> getTable() {
-		return table;
-	}
-
-	public void setTable(Hashtable<String, LinkedList<String>> table) {
-		this.table = table;
-	}
-	 */
 
 	@Override
 	public String LPUSH(String key, LinkedList<String> value) {		
@@ -454,6 +475,7 @@ public class ServerProtocol implements ClientItf<String> {
 	@Override
 	public String FLUSHALL() {
 		table.clear();
+		tableHash.clear();
 		return "OK";
 	}
 
@@ -483,7 +505,16 @@ public class ServerProtocol implements ClientItf<String> {
 	}
 
 	@Override
-	public String LRANGE(String key, int start, int end) {
+	public String LRANGE(String key, String startS, String endS) {
+
+		if(!estUnEntier(startS) && !estUnEntier(endS)){
+			System.err.println("ERREUR : la ou les valeurs start et end ne sont pas des entiers");
+			return null;
+		} 
+		int start = Integer.parseInt(startS);
+		int end = Integer.parseInt(endS);			
+
+
 		if(table.containsKey(key)){
 			LinkedList<String> tmp = table.get(key);
 			String res = "";
@@ -566,7 +597,7 @@ public class ServerProtocol implements ClientItf<String> {
 			}
 			else
 			{
-				System.err.println("(erreur) ERR value is not an integer or out of range");
+				System.err.println("ERREUR : value n'est pas un entier");
 				return null;
 			}
 		}else{
@@ -587,7 +618,7 @@ public class ServerProtocol implements ClientItf<String> {
 			}
 			else
 			{
-				System.err.println("(erreur) ERR value is not an integer or out of range");
+				System.err.println("ERREUR : value n'est pas un entier");
 				return null;
 			}
 		}else{
@@ -621,31 +652,45 @@ public class ServerProtocol implements ClientItf<String> {
 		Commandes += "LRANGE Key start end : renvoie les valeurs de Key compris entre start et end\n";
 		Commandes += "GETSET Key values : remplace les valeurs de Key par values et retourne les anciennes\n";
 		Commandes += "SET Key values : remplace les valeurs de Key par values et créer la clé si elle est inexistante\n";
-
-
+		Commandes += "APPEND Key value : concatène la valeur à la clé et renvoie la longueur finale\n";
+		Commandes += "DECR Key : décrémente la valeur de Key si c'est un entier\n";
+		Commandes += "INCR Key : incrémente la valeur de Key si c'est un entier\n";
 		Commandes += "ECHO String : affiche la String\n";
 		Commandes += "COMMAND : affiche les commandes\n";
-
-
-
-
-
+		Commandes += "HSET Key Field value: met à jour la valeur de Field, la créer si existe pas\n";
+		Commandes += "HGET Key Field : renvoie la valeurs de Field dans Key\n";
+		Commandes += "HDEL Key Field : supprime Field de Key\n";
+		Commandes += "HEXISTS Key Field : renvoie 1 si Field existe, 0 sinon\n";
+		Commandes += "HKEYS Key : renvoie la liste des Fields de Key\n";
+		Commandes += "HLEN Key : renvoie le nombre de Field de la Key\n";
+		Commandes += "HSTRLEN Key Field : renvoie la longueur de la valeur du Field\n";
+		Commandes += "HVALS Key : affiche les valeurs de chaque Field dans leur ordre d'insertion\n";
+		Commandes += "HINCRBY Key Field int : incrément la valeur de Field de int\n";
+		
 		return Commandes;
 	}
 
 	@Override
 	public String HSET(String key, String field, String value) {
 		String res="";
-		Hashtable<String,String> tmp = new Hashtable<String,String>();
-		tmp.put(field, value);
-		LinkedList<Hashtable<String,String>> ltmp = new LinkedList<Hashtable<String,String>>();
-		ltmp.add(tmp);
-		tableHash.put(key, ltmp);
 
-		if(tableHash.containsKey(key)){	
+		if(tableHash.containsKey(key)){
+			LinkedList<Hashtable<String,String>> listeFields = tableHash.get(key);
+			if(estDansHash(listeFields, field)){
+				setValueH(listeFields, field, value);
+			} else {
+				Hashtable<String,String> tmp = new Hashtable<String,String>();
+				tmp.put(field, value);
+				listeFields.add(tmp);
+			}
 			res = "(integer) 1";
 
 		}else{
+			Hashtable<String,String> tmp = new Hashtable<String,String>();
+			tmp.put(field, value);
+			LinkedList<Hashtable<String,String>> ltmp = new LinkedList<Hashtable<String,String>>();
+			ltmp.add(tmp);
+			tableHash.put(key, ltmp);
 			res = "(integer) 0";
 		}
 		return res;
@@ -666,11 +711,12 @@ public class ServerProtocol implements ClientItf<String> {
 	public String HDEL(String key, String field) {
 		String res="";
 		if(tableHash.containsKey(key)){
-			//if(tableHash.get(key).containsKey(field)){
-				tableHash.get(key).remove(field);
-
+			if(estDansHash(tableHash.get(key),field)){
+				Hashtable<String,String> tmp = new Hashtable<String,String>();
+				tmp.put(field, valueH(tableHash.get(key), field));
+				tableHash.get(key).remove(tmp);
 				res = "(integer) 1";
-			//}
+			}
 		}
 		else{
 			res = "(integer) 0";
@@ -681,9 +727,9 @@ public class ServerProtocol implements ClientItf<String> {
 	@Override
 	public String HEXISTS(String key, String field) {
 		if(tableHash.containsKey(key)){
-			/*if(tableHash.get(key).containsKey(field)){
+			if(estDansHash(tableHash.get(key),field)){
 				return "(integer) 1";
-			}*/
+			}
 		}
 		return "(integer) 0";
 	}
@@ -692,50 +738,90 @@ public class ServerProtocol implements ClientItf<String> {
 	public String HKEYS(String key) {
 		String res="";
 		if(tableHash.containsKey(key)){
-			int cpt=0;
-			/*Hashtable<String, String> ht= tableHash.get(key);
-
-			Set<String> set = ht.keySet();
-			String str ;
-			Iterator<String> it = set.iterator();
-			while (it.hasNext()) {
-				str = it.next();
-				cpt++;
-				res=res.concat(cpt+") "+str+"\n");
+			int cmp = 1;
+			for(Hashtable<String,String> h: tableHash.get(key)){
+				Enumeration<String> e = h.keys();				
+				while (e.hasMoreElements()){
+					res+=cmp+") "+e.nextElement()+"\n";
+					cmp ++;
+				}
 			}
-
-			if(cpt == 0){
-				return "Clé vide";
-			}
+			return res;
 		} else {
 			return "Clé inexistante";
 		}
-*/
-		return res;
 	}
 
 	@Override
 	public String HLEN(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		if(tableHash.containsKey(key)){
+			return "(integer) "+tableHash.get(key).size();
+		} else {
+			return "Clé inexistante";
+		}
 	}
 
 	@Override
 	public String HSTRLEN(String key, String field) {
-		// TODO Auto-generated method stub
-		return null;
+		if(tableHash.containsKey(key)){
+			if(estDansHash(tableHash.get(key), field)){
+				int l = valueH(tableHash.get(key), field).length();
+				return "(integer) "+l;
+			}	
+		}
+		return "Clé inexistante";
 	}
 
 	@Override
-	public LinkedList<String> HVALS(String key) {
-		// TODO Auto-generated method stub
-		return null;
+	public String HVALS(String key) {
+		String res = "";
+		if(tableHash.containsKey(key)){
+			int cmp = 1;
+			for(Hashtable<String,String> h: tableHash.get(key)){
+				Enumeration<String> e = h.keys();				
+				while (e.hasMoreElements()){
+					res+=cmp+") "+valueH(tableHash.get(key),e.nextElement())+"\n";
+					cmp ++;
+				}
+			}
+			return res;
+		}
+		return "Clé inexistante";
 	}
 
 	@Override
-	public String HINCRBY(String key, String field, int valIncr) {
-		// TODO Auto-generated method stub
-		return null;
+	public String HINCRBY(String key, String field, String valIncr) {
+		if(tableHash.containsKey(key)){
+
+			if(estDansHash(tableHash.get(key), field)){
+				String res = valueH(tableHash.get(key),field);
+				if(estUnEntier(res)){
+					int i=Integer.parseInt(res)+Integer.parseInt(valIncr);
+
+					HSET(key,field,String.valueOf(i));
+					return "(integer) "+i;
+				}else{
+					System.err.println("ERREUR : La valeur n'est pas un entier");
+					return null;
+				}				
+			} else{		
+				if(estUnEntier(valIncr)){
+					HSET(key,field, valIncr);
+					return ("(integer) 1");
+				}else{
+					System.err.println("ERREUR : La valeur n'est pas un entier");
+					return null;
+				}
+			}
+		}else{		
+			if(estUnEntier(valIncr)){
+				HSET(key,field, valIncr);
+				return ("(integer) 1");
+			}else{
+				System.err.println("ERREUR : La valeur n'est pas un entier");
+				return null;
+			}
+		}
 	}
 
 
@@ -748,17 +834,26 @@ public class ServerProtocol implements ClientItf<String> {
 		}
 		return false;
 	}
-	
+
 	public String valueH(LinkedList<Hashtable<String,String>> lhash, String key ){
 		String res="";
-		
+
 		for(Hashtable<String,String> h: lhash){
 			if(h.containsKey(key)){
-				res=h.get(key);
+				return h.get(key);
 			}
 		}
 		return res;
 	}
+
+	public void setValueH(LinkedList<Hashtable<String,String>> lhash, String key, String value ){		
+		for(Hashtable<String,String> h: lhash){
+			if(h.containsKey(key)){
+				h.put(key, value);
+			}
+		}
+	}
+
 
 	public boolean estUnEntier(String chaine) {
 		try {
@@ -771,7 +866,4 @@ public class ServerProtocol implements ClientItf<String> {
 
 		return true;
 	}
-
-
-
 }
