@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="0.059" errors="0" skipped="0" tests="29" name="fr.uga.erods.ServerProtocolTest">
+  <properties>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64"/>
+    <property name="java.vm.version" value="24.95-b01"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="FR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/l/lerchunt/TAGL/TAGL"/>
+    <property name="java.runtime.version" value="1.7.0_95-b00"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Linux"/>
+    <property name="classworlds.conf" value="/usr/share/maven/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="51.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="3.19.0-25-generic"/>
+    <property name="user.home" value="/home/l/lerchunt"/>
+    <property name="user.timezone" value="Europe/Paris"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="1.7"/>
+    <property name="user.name" value="lerchunt"/>
+    <property name="java.class.path" value="/usr/share/maven/boot/plexus-classworlds-2.x.jar"/>
+    <property name="java.vm.specification.version" value="1.7"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/usr/lib/jvm/java-7-openjdk-amd64/jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="fr"/>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.7.0_95"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="securerandom.source" value="file:/dev/./urandom"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/resources.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rt.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jsse.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jce.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/charsets.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/rhino.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/jfr.jar:/usr/lib/jvm/java-7-openjdk-amd64/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/usr/share/maven"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0.003" classname="fr.uga.erods.ServerProtocolTest" name="testDEL1elem"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testDEL2elem"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testEXISTSTrue"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testSETNewKey"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLINSERTCl\u00E9Inex"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testGET"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testSET"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testRPUSH"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testECHO"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testLLEN"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLPOP"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testLSET"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testRPOP"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testSREM"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLPUSHElements"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testFLUSHALL"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testLINSERTBEFORE"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLINSERTAFTER"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testGETSETIncorrect"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLPUSHCreation"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testGETSET"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLPUSHX"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testLRANGE"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLRANGETous"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testRPUSHX"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testLPUSHXError"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testLPUSHElement"/>
+  <testcase time="0" classname="fr.uga.erods.ServerProtocolTest" name="testEXISTSFalse"/>
+  <testcase time="0.001" classname="fr.uga.erods.ServerProtocolTest" name="testLINSERTValInex"/>
+</testsuite>
