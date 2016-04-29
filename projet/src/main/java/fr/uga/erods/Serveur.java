@@ -29,7 +29,7 @@ public class Serveur extends Thread{
  
             while ((inputLine = in.readLine()) != null) {
                 outputLine = sp.processInput(inputLine,0);
-                out.println(outputLine);
+                out.print(outputLine);
                 if (outputLine.equals("EXIT"))
                     break;
             }
