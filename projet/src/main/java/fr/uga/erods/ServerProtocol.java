@@ -10,10 +10,11 @@ public class ServerProtocol implements ClientItf<String> {
 	private static final int MANIPULATION = 2;
 	private static final int COMMANDES = 1;
 
-	private int state = MENU;
+	private int state;
 
 	public Hashtable<String, LinkedList<String>> table = new Hashtable<String, LinkedList<String>>();
 	public Hashtable<String, LinkedList<Hashtable<String, String>>> tableHash = new Hashtable<String, LinkedList<Hashtable<String, String>>>();
+	
 
 	public String processInput(String theInput, int state) {
 		String theOutput = null;
@@ -25,18 +26,18 @@ public class ServerProtocol implements ClientItf<String> {
 					+ "2 - Manipuler les données \n";
 
 
-			state = REPONSE;
-		} else if (state == REPONSE) {
+			setState(REPONSE);
+		} else if (this.state == REPONSE) {
 			if (theInput.equalsIgnoreCase("2")) {
-				state = MANIPULATION;            	
+				setState(MANIPULATION);            	
 			} else if (theInput.equalsIgnoreCase("1")) {
-				state = COMMANDES;
+				setState(COMMANDES);
 			} else {
 				theOutput = "Vous n'avez pas entrée une valeur correcte. "
 						+ "Entrez une valeur entre 1 et 2 : ";
-				state=REPONSE;
+				setState(REPONSE);
 			}
-		} else if (state == MANIPULATION) {
+		} else if (this.state == MANIPULATION) {
 
 			if(theInput.toUpperCase().startsWith("LPUSH ")){
 				String[] input = theInput.split(" ");
@@ -311,13 +312,13 @@ public class ServerProtocol implements ClientItf<String> {
 			}
 
 
+			setState(MANIPULATION);
 
 
 
-
-		} else if (state == COMMANDES) {
+		} else if (this.state == COMMANDES) {
 			theOutput = COMMAND();
-			state = MENU;
+			setState(MENU);
 		}
 		return theOutput;
 	}
@@ -865,5 +866,15 @@ public class ServerProtocol implements ClientItf<String> {
 		}
 
 		return true;
+	}
+
+
+	public int getState() {
+		return state;
+	}
+
+
+	public void setState(int state) {
+		this.state = state;
 	}
 }

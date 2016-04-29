@@ -23,13 +23,18 @@ public class Serveur extends Thread{
                     socket.getInputStream()));
         ) {
             String inputLine, outputLine;
+            int state = 0;
             ServerProtocol sp = new ServerProtocol();
-            outputLine = sp.processInput(null,0);
+            outputLine = sp.processInput(null,state);
             out.println(outputLine);
  
             while ((inputLine = in.readLine()) != null) {
-                outputLine = sp.processInput(inputLine,0);
-                out.print(outputLine);
+            	state = sp.getState();
+            	if(sp.processInput(inputLine,state) != null){
+            		outputLine = sp.processInput(inputLine,state);
+                	out.println(outputLine);
+            	}
+            	
                 if (outputLine.equals("EXIT"))
                     break;
             }
