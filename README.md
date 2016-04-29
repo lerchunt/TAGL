@@ -4,7 +4,23 @@
 					=========================
 
 
-* Liste des fonctionalités :
+
+Menmbres du Projet: 
+Julie Catania
+Thomas Lerchundi
+
+
+*Fonctionnalités implémentées:
+		
+		Nous avons implémentée un gestionnaire stockage Clé /valeur . 
+		Il fonctionne sous une approche Client/Serveur (utilisation de sockets) et de manière Multi-Threadé. 
+		Le sytème de stockage permet aussi la manipulation de structure de donées Complexe.
+		Une partie importante des fonctionnalités proposées par Redis ont été implémentée. 
+		La liste des fonctionnalités est détaillée ci dessous.
+
+
+
+* Liste des fonctionalités similaires à Redis:
 
 		LPUSH <Key> <values> : insertion des values par la droite dans Key
 		LPUSHX <Key> <values> : insertion des values par la droite si Key existe
@@ -36,4 +52,38 @@
 		HSTRLEN <Key> <Field> : renvoie la longueur de la valeur du Field 
 		HVALS <Key> : affiche les valeurs de chaque Field dans leur ordre d'insertion 
 		HINCRBY <Key> <Field> <int> : incrément la valeur de Field de int 
+
+
+* Tests Unitaires:
+
+		Les tests unitaires qui ont été effectués couvrent chacune des commandes ci-dessus. L’ensemble des tests est disponible dans le fichier TransactionTest.java
+
+
+* Utilisation du système :
+
+		Pour compiler 
+			-depuis le répertoire TAGL/ : 
+			mvn compile
+	
+		Pour lancer les tests:
+			-depuis le répertoire TAGL/ : 
+			mvn compile
+
 		
+		Lancer l’application : 
+			-se placer dans le répertoire TAGL/projet/target/classes/
+
+				*(pour le Serveur) : java main.java.fr.uga.erods.Serveur Multi 4444
+				*(pour le Client) : java main.java.fr.uga.erods.Client localhost 4444 
+
+
+
+* FeedBack :
+
+	Travis:
+		Dans l’ensemble, nous n’avons pas compris immédiatement l’importance d’utiliser un outil intégration continue pour notre projet. 
+		Cependant, nous nous sommes vite rendus compte de son aspect pratique, qui nous a permis de nous assurer automatiquement de la bonne prise en compte des modifications que nous effectuons au cours du temps, et ce indépendemment de nos machines locales.
+
+	Sur le projet en général : 
+		Dans l’ensemble, ce projet nous a permis de nous faire une idée du fonctionnement général d’un projet en entreprise. 
+		La prise en main des diverses technologies s’est révélée intéressante, même si de temps en temps,le développement global du système de stockage a pris le dessus sur l’apprentissage des techniques appliquées au développement logiciel.

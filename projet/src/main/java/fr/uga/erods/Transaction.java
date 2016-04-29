@@ -1,10 +1,11 @@
 package main.java.fr.uga.erods;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-public class Transaction implements ClientItf<String> {
+public class Transaction implements ClientItf<String>,Serializable {
 	public Hashtable<String, LinkedList<String>> table;
 	public Hashtable<String, LinkedList<Hashtable<String, String>>> tableHash;
 
@@ -475,11 +476,11 @@ public class Transaction implements ClientItf<String> {
 			if(end == -1){
 				end = tmp.size()-1;
 			}
-			if(start >tmp.size()){
+			if(start >tmp.size()-1){
 				return "(liste vide ou inexistante)";
 			}
-			if(end >tmp.size()){
-				end = tmp.size();
+			if(end >tmp.size()-1){
+				end = tmp.size()-1;
 			}
 			for (int i=start;i<= end;i++){
 				cmp++;
