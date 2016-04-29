@@ -8,22 +8,6 @@ import junit.framework.TestCase;
 
 public class ServerProtocolTest extends TestCase {
 
-	/*
-	public void testProcessInput() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetTable() {
-		fail("Not yet implemented");
-	}
-
-	public void testSetTable() {
-		fail("Not yet implemented");
-	}
-
-	 */
-
-
 	public void testLPUSHCreation() {		
 		//Insertion d'un élément dans une nouvelle clé
 		ServerProtocol sp = new ServerProtocol();
