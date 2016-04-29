@@ -1,37 +1,21 @@
-package fr.uga.erods;
+package test.java.fr.uga.erods;
 
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 import junit.framework.TestCase;
+import main.java.fr.uga.erods.ServerProtocol;
 
 public class ServerProtocolTest extends TestCase {
-
-	/*
-	public void testProcessInput() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetTable() {
-		fail("Not yet implemented");
-	}
-
-	public void testSetTable() {
-		fail("Not yet implemented");
-	}
-
-	 */
-
 
 	public void testLPUSHCreation() {		
 		//Insertion d'un élément dans une nouvelle clé
 		ServerProtocol sp = new ServerProtocol();
 		String theInput = "LPUSH friends Thomas";
-		String m = sp.processInput(theInput,2); //2 pour accéder directement à l'état MANIPULATION
+		sp.processInput(theInput,2); //2 pour accéder directement à l'état MANIPULATION
 		assertEquals("élément présent dans la clé : ","Thomas",sp.table.get("friends").get(0) );
 	}
 
+	
+	
 	public void testLPUSHElement() {		
 		//Insertion d'un élément à gauche dans une clé existante
 		ServerProtocol sp = new ServerProtocol();
@@ -116,7 +100,7 @@ public class ServerProtocolTest extends TestCase {
 		String theInput = "RPUSH friends Thomas";
 		sp.processInput(theInput,2); 
 		theInput = "LINSERT friends BEFORE Thomas Julie";
-		String m = sp.processInput(theInput,2);
+		sp.processInput(theInput,2);
 
 		String resultatObtenu = sp.table.get("friends").get(0) + " " + sp.table.get("friends").get(1);
 		assertEquals("insertion avec LINSERT BEFORE :", "Julie Thomas",resultatObtenu);
@@ -355,7 +339,7 @@ public class ServerProtocolTest extends TestCase {
 	public void testSETNewKey() {
 		ServerProtocol sp = new ServerProtocol();
 		String theInput = "SET friends Lorrie";
-		String m = sp.processInput(theInput,2);
+		sp.processInput(theInput,2);
 		assertTrue("SET clé inexistante ",sp.table.get("friends").get(0).equals("Lorrie"));
 	}
 	
@@ -363,24 +347,40 @@ public class ServerProtocolTest extends TestCase {
 		ServerProtocol sp = new ServerProtocol();
 		String theInput = "SET friends Thomas";
 		theInput = "SET friends Lorrie";
-		String m = sp.processInput(theInput,2);
+		sp.processInput(theInput,2);
 		
 		assertTrue("SET clé existante ",sp.table.get("friends").get(0).equals("Lorrie") && sp.table.get("friends").size()==1);
 	}
-/*
+
 	public void testAPPEND() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "SET friend Lo";
+		sp.processInput(theInput,2);
+		theInput = "APPEND friend to";
+		sp.processInput(theInput,2);
+		
+		assertEquals("SET clé existante ","Loto",sp.table.get("friend").get(0));
 	}
 
 	public void testDECR() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "SET number 24";
+		sp.processInput(theInput,2);
+		theInput = "DECR number";
+		sp.processInput(theInput,2);
+		
+		assertTrue("DECR ",sp.table.get("number").get(0).equals("23"));
 	}
 
 	public void testINCR() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "SET number 24";
+		sp.processInput(theInput,2);
+		theInput = "INCR number";
+		sp.processInput(theInput,2);
+		
+		assertTrue("INCR ",sp.table.get("number").get(0).equals("25"));
 	}
-	*/
-
 	public void testECHO() {
 		ServerProtocol sp = new ServerProtocol();
 		String theInput = "ECHO message enregistré !";
@@ -392,42 +392,159 @@ public class ServerProtocolTest extends TestCase {
 	public void testCOMMAND() {
 		fail("Not yet implemented");
 	}
-
-	public void testHSET() {
-		fail("Not yet implemented");
+*/
+	
+	public void testHSETNewKey() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		
+		assertTrue("HSET clés inexistantes",sp.tableHash.get("Pomme").get(0).contains("verte") && sp.tableHash.get("Pomme").size()==1);
 	}
+	
+	public void testHSET() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Grany mure";
+		sp.processInput(theInput,2);
+		
+		assertTrue("HSET clés existantes",sp.tableHash.get("Pomme").get(0).get("Grany").equals("mure") && sp.tableHash.get("Pomme").size()==1);
+	}
+	
+	public void testHSETMultiple() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Reinette rouge";
+		sp.processInput(theInput,2);
+		
+		assertTrue("HSET clés existantes",sp.estDansHash(sp.tableHash.get("Pomme"),("Grany")) && sp.estDansHash(sp.tableHash.get("Pomme"),("Reinette")));
+	}
+	
+	
 
 	public void testHGET() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HGET Pomme Grany";
+		String m = sp.processInput(theInput,2);
+		
+		assertEquals("HGET clés existantes","verte",m);
 	}
+	
 
 	public void testHDEL() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HDEL Pomme Grany";
+		sp.processInput(theInput,2);
+		
+		assertFalse("HDEL clés existantes",sp.estDansHash(sp.tableHash.get("Pomme"),("Grany")));
+	}
+	
+	public void testHDELvoid() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HDEL Pomme Pote";
+		sp.processInput(theInput,2);
+		
+		assertFalse("HDEL clés existantes",!sp.estDansHash(sp.tableHash.get("Pomme"),("Grany")) && sp.estDansHash(sp.tableHash.get("Pomme"),"Pote"));
 	}
 
-	public void testHEXISTS() {
-		fail("Not yet implemented");
+	public void testHEXISTSTrue() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HEXISTS Pomme Grany";
+		String m = sp.processInput(theInput,2);
+		
+		assertEquals("HEXISTS clés existantes","(integer) 1",m);
 	}
+	
+	public void testHEXISTSFalse() {
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HEXISTS Pomme Pote";
+		String m = sp.processInput(theInput,2);
+		
+		assertEquals("HEXISTS clés existantes","(integer) 0",m);
+	}
+	
+	
+	
 
 	public void testHKEYS() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Golden jaune";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Reinette rouge";
+		sp.processInput(theInput,2);
+		theInput = "HKEYS Pomme";
+		String m = sp.processInput(theInput,2);
+		
+		
+		String resAttendu= "1) Grany\n2) Golden\n3) Reinette\n";
+		assertEquals("HKEYS clés existantes",resAttendu,m);
 	}
 
+	
 	public void testHLEN() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Golden jaune";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Reinette rouge";
+		sp.processInput(theInput,2);
+		theInput = "HLEN Pomme";
+		sp.processInput(theInput,2);
+		
+		assertEquals("HKEYS clés existantes",3,sp.tableHash.get("Pomme").size());
 	}
+	
 
 	public void testHSTRLEN() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HSTRLEN Pomme Grany";
+		sp.processInput(theInput,2);
+		
+		assertEquals("HSTRLEN clés existantes",5,sp.valueH(sp.tableHash.get("Pomme"),"Grany").length());	
 	}
 
 	public void testHVALS() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Pomme Grany verte";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Smith jaune";
+		sp.processInput(theInput,2);
+		theInput = "HSET Pomme Pote rouge";
+		sp.processInput(theInput,2);
+		theInput = "HVALS Pomme";
+		String m = sp.processInput(theInput,2);
+		
+		String resAttendu = "1) verte\n2) jaune\n3) rouge\n";
+		
+		assertEquals("HVALS clés existantes",resAttendu,m);	
+	
 	}
 
 	public void testHINCRBY() {
-		fail("Not yet implemented");
+		ServerProtocol sp = new ServerProtocol();
+		String theInput = "HSET Numero Acces 10";
+		sp.processInput(theInput,2);
+		theInput = "HINCRBY Numero Acces 15";
+		sp.processInput(theInput,2);
+		
+		assertEquals("HINCRBY clés existantes","25",sp.valueH(sp.tableHash.get("Numero"), "Acces"));	
 	}
-	*/
 
 }
