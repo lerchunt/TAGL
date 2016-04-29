@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.08" errors="0" skipped="0" tests="45" name="test.java.fr.uga.erods.ServerProtocolTest">
+<testsuite failures="0" time="0.076" errors="0" skipped="0" tests="45" name="test.java.fr.uga.erods.ServerProtocolTest">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64"/>
@@ -59,49 +59,49 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testDEL1elem"/>
+  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testDEL1elem"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testDEL2elem"/>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testEXISTSTrue"/>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testSETNewKey"/>
+  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testEXISTSTrue"/>
+  <testcase time="0.004" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testSETNewKey"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLINSERTCl\u00E9Inex"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testGET"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testSET"/>
   <testcase time="0.003" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHKEYS"/>
-  <testcase time="0.004" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHVALS"/>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testRPUSH"/>
+  <testcase time="0.003" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHVALS"/>
+  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testRPUSH"/>
   <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testDECR"/>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testECHO"/>
+  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testECHO"/>
   <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHDEL"/>
   <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHGET"/>
-  <testcase time="0.003" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHLEN"/>
-  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHSET"/>
+  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHLEN"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHSET"/>
   <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testINCR"/>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLLEN"/>
+  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLLEN"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPOP"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLSET"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testRPOP"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testSREM"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHElements"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testFLUSHALL"/>
-  <testcase time="0.002" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLINSERTBEFORE"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLINSERTBEFORE"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHDELvoid"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHINCRBY"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLINSERTAFTER"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHSTRLEN"/>
-  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHSETNewKey"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHSETNewKey"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testGETSETIncorrect"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHCreation"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testAPPEND"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHSETMultiple"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testGETSET"/>
-  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHX"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHX"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLRANGE"/>
-  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHEXISTSFalse"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHEXISTSFalse"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLRANGETous"/>
-  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testRPUSHX"/>
-  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHXError"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testRPUSHX"/>
+  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHXError"/>
   <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLPUSHElement"/>
-  <testcase time="0.001" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testEXISTSFalse"/>
+  <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testEXISTSFalse"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testLINSERTValInex"/>
   <testcase time="0" classname="test.java.fr.uga.erods.ServerProtocolTest" name="testHEXISTSTrue"/>
 </testsuite>
