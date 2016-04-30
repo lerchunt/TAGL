@@ -73,7 +73,7 @@ Thomas Lerchundi
 		Pour lancer l’application : 
 			-se placer dans le répertoire TAGL/projet/target/classes/
 
-				1) Executer le Serveur : java main.java.fr.uga.erods.Serveur Multi 4444
+				1) Executer le Serveur : java main.java.fr.uga.erods.ServeurMulti 4444
 				2) Executer un Client :  java main.java.fr.uga.erods.Client localhost 4444 
 				(On peut executer autant de client que l'on souhaite)
 
