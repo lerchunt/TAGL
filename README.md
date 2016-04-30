@@ -5,16 +5,16 @@
 
 
 
-Menmbres du Projet: 
+Membres du Projet: 
 Julie Catania
 Thomas Lerchundi
 
 
 *Fonctionnalités implémentées:
 		
-		Nous avons implémentée un gestionnaire stockage Clé /valeur . 
+		Nous avons implémenté un gestionnaire stockage Clé /valeur . 
 		Il fonctionne sous une approche Client/Serveur (utilisation de sockets) et de manière Multi-Threadé. 
-		Le sytème de stockage permet aussi la manipulation de structure de donées Complexe.
+		Le sytème de stockage permet aussi la manipulation de structure de donées Complexes.
 		Une partie importante des fonctionnalités proposées par Redis ont été implémentée. 
 		La liste des fonctionnalités est détaillée ci dessous.
 
@@ -56,7 +56,7 @@ Thomas Lerchundi
 
 * Tests Unitaires:
 
-		Les tests unitaires qui ont été effectués couvrent chacune des commandes ci-dessus. L’ensemble des tests est disponible dans le fichier TransactionTest.java
+		Les tests unitaires qui ont été effectués couvrent chacune des commandes ci-dessus. L’ensemble des tests est disponible dans les fichiers TransactionTest.java et MenuTest.java
 
 
 * Utilisation du système :
@@ -70,18 +70,18 @@ Thomas Lerchundi
 			mvn compile
 
 		
-		Lancer l’application : 
+		Pour lancer l’application : 
 			-se placer dans le répertoire TAGL/projet/target/classes/
 
-				*(pour le Serveur) : java main.java.fr.uga.erods.Serveur Multi 4444
-				*(pour le Client) : java main.java.fr.uga.erods.Client localhost 4444 
-
+				1) Executer le Serveur : java main.java.fr.uga.erods.Serveur Multi 4444
+				2) Executer un Client :  java main.java.fr.uga.erods.Client localhost 4444 
+				(On peut executer autant de client que l'on souhaite)
 
 
 * FeedBack :
 
 	Travis:
-		Dans l’ensemble, nous n’avons pas compris immédiatement l’importance d’utiliser un outil intégration continue pour notre projet. 
+		Dans l’ensemble, nous n’avons pas compris immédiatement l’importance d’utiliser un outil d'intégration continue pour notre projet. 
 		Cependant, nous nous sommes vite rendus compte de son aspect pratique, qui nous a permis de nous assurer automatiquement de la bonne prise en compte des modifications que nous effectuons au cours du temps, et ce indépendemment de nos machines locales.
 
 	Sur le projet en général : 

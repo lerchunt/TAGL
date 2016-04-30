@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 
 public class Transaction implements ClientItf<String>,Serializable {
+	private static final long serialVersionUID = 1L;
 	public Hashtable<String, LinkedList<String>> table;
 	public Hashtable<String, LinkedList<Hashtable<String, String>>> tableHash;
 
